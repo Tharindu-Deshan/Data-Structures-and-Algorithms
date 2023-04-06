@@ -1,47 +1,53 @@
-
-//week_6
 #include <iostream>
+#include<chrono>
 #include <ctime>
-
 using namespace std;
-//implement stack using array
-#define MAXIMUM 1000
-int array_stack[MAXIMUM];
-int head=-1;     //top=-1 indicates th stack is empty
-void push(int data){
-    if(head==MAXIMUM-1){
-        cout<<"Stack overflow";
-        return;
-    }
-    head++;
-    array_stack[head]=data;
-}
-int pop(){
-    if(head==-1){
-        cout<<"Stack underflow";
+//Implementation of a stack using linkedlist
+struct Node{
+    int data;
+    struct Node *next;
+};
+struct Node* top =NULL;
+void display(){
+    if(top==NULL){
+        cout<<"Stack is empty"<<endl;
         exit(1);
     }
-    head--;
-    return array_stack[head+1];
-}
-void display(){
+    Node *New_Node=top;
     cout<<"{";
-    for(int i=0;i<=head;i++){
-        ::printf("%d  ",array_stack[i]);
+    while(New_Node->next!=NULL){
+        cout<<New_Node->data<<",";
+        New_Node=New_Node->next;
     }
     cout<<"\b}\n";
 }
 
+int pop(){
+    if (top==NULL){cout << "Stack is EMPTY";exit(1);}
+    int data=top->data;
+    top=top->next;
+    return data;
+}
+void push(int data){
+    struct Node* New_Node=(struct Node*)malloc(sizeof(struct Node));
+    New_Node->data=data;
+    New_Node->next=top;
+    top=New_Node;
+}
 
 int main() {
-    //stack implementation using arrays
+
+
+
     clock_t start, stop;
     double totalTime;
+
     start = clock();
-    // Do stuff here
 
 
-    //auto begin1 =chrono::high_resolution_clock::now();
+
+
+
     push(8);
     push(10);
     push(5);
@@ -63,9 +69,8 @@ int main() {
     display();
     stop = clock();
     totalTime = (stop - start) / (double)CLOCKS_PER_SEC;
-    int totime = totalTime*1000;
-    ::printf("Time taken : %d milisecounds ",totime);
-
+    double toTime = totalTime*1000;
+    ::printf("Time taken  : %f  milisecounds  ",toTime);
 
     return 0;
 }
